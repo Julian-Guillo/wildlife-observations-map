@@ -1,0 +1,6 @@
+.Rproj.user/
+.Rhistory
+
+# Ignore large data files
+data/*
+!data/poland_species_names.rds

@@ -16,8 +16,8 @@ show_popup <- function(row) {
   
   if (has_photo) {
     popup_content <- paste0(
-      popup_content,
-      "<img src='", gsub("/$", ".jpg", identifier), ".jpg' width='200' style='margin-top:5px;'/>"
+      "<img src='", gsub("/$", ".jpg", identifier), ".jpg' width='200' style='margin-bottom:5px;'/><br/>",
+      popup_content
     )
   }
   

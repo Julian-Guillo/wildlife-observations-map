@@ -12,6 +12,7 @@ source("modules/app_ui.R")
 source("modules/mod_search.R")
 source("modules/mod_map.R")
 source("modules/mod_timeline.R")
+source("modules/mod_table.R")
 
 # Create a named vector for country codes
 country_names <- c(

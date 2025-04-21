@@ -17,9 +17,18 @@ app_ui <- function() {
       div(
         class = "m-3",
         card(class = "mb-3 map", "testing"),
-        card(class = "timeline", style = "min-height: 20vh;", 
-             "This is a small card, e.g., for summary or status.")
-      ),
+        layout_columns(
+          col_widths = c(8, 4),
+          card(class = "timeline", style = "min-height: 20vh;", 
+               "This is a small card, e.g., for summary or status."),
+          value_box(
+            title = "Obs. last 20 years",
+            value = 1000,
+            showcase = bsicons::bs_icon("camera"),
+            showcase_layout = "left center",
+            theme = "text-success"
+          )
+      )),
       
       div(
         class = "m-3",

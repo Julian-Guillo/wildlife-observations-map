@@ -1,3 +1,8 @@
+/* Hide empty tab panes completely */
+.custom-nav-panel {
+  display: none !important;
+}
+
 /* Ensure selectize dropdowns appear above other elements */
 .selectize-dropdown {
   z-index: 10000 !important;
@@ -18,4 +23,11 @@
 /* Make map occupy 50vh*/
 .map {
   height: 70vh;
+}
+
+/* Minimize height of nav tabs */
+.navbar .nav-tabs {
+  min-height: 0;
+  height: auto !important;
+  margin-bottom: 0;
 }

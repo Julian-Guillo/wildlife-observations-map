@@ -27,11 +27,12 @@ mod_table_server <- function(id, filtered_data) {
           select(Locality = locality, Date = eventDate, Photo = Identifier),
         options = list(
           pageLength = 10,
-          scrollY = "50vh",
+          scrollY = TRUE,
           scrollX = TRUE,
           scroller = TRUE,
           paging = TRUE,
-          dom = 'frtip'
+          dom = 'frtip',
+          order = list(1, 'desc')  # Sort by "Photo" (second column), ascending
         ),
         selection = list(mode = "single", target = "row"),
         rownames = FALSE,

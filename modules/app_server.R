@@ -12,12 +12,4 @@ app_server <- function(input, output, session) {
   mod_map_server("map", filtered_data, selected_row)
   mod_timeline_server("timeline", filtered_data)
   mod_counter_server("counter", filtered_data)
-  
-  observe({
-    req(selected_row())
-    if (!is.null(selected_row())) {
-      print("Selected row:")
-      print(selected_row())
-    }
-  })
 }

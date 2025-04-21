@@ -19,7 +19,11 @@ mod_map_server <- function(id, filtered_data, selected_row) {
       
       leaflet(data) %>%
         addTiles() %>%
-        setView(lng = -3.7038, lat = 40.4168, zoom = 6) %>%  # Center on Madrid, Spain
+        setView(
+          lng = mean(data$longitudeDecimal, na.rm = TRUE),
+          lat = mean(data$latitudeDecimal, na.rm = TRUE),
+          zoom = 5
+        ) %>%
         addCircleMarkers(
           lng = ~longitudeDecimal,
           lat = ~latitudeDecimal,

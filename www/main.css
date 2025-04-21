@@ -1,0 +1,21 @@
+/* Ensure selectize dropdowns appear above other elements */
+.selectize-dropdown {
+  z-index: 10000 !important;
+  max-height: 300px !important;
+  overflow-y: auto !important;
+}
+
+/* Make sure the container doesn't clip the dropdown */
+.card-body {
+  overflow: visible !important;
+}
+
+/* Ensure the dropdown can extend outside its parent */
+.selectize-control {
+  position: relative !important;
+}
+
+/* Make map occupy 50vh*/
+.map {
+  height: 70vh;
+}

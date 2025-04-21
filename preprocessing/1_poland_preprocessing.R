@@ -58,7 +58,7 @@ poland_with_multimedia <- poland_data %>%
 # Save the dataset to Parquet
 write_dataset(
   poland_with_multimedia,
-  path = "data/PL.parquet",
+  path = "data/europe_data.parquet/PL.parquet",
   format = "parquet",
   partitioning = "scientificName",
   max_partitions = 5000L,
@@ -82,7 +82,7 @@ write_dataset(
 # Create vector with unique scientific names------------------------------------
 
 # Read the dataset
-poland_data <- open_dataset("data/PL.parquet") %>%
+poland_data <- open_dataset("data/europe_data.parquet/PL.parquet") %>%
   select(scientificName, vernacularName)
 
 # Get unique scientific names and their corresponding vernacular names
@@ -106,4 +106,4 @@ names(names_list) <- ifelse(
 
 
 # Save to rds
-saveRDS(names_list, file = "data/species_names/poland_species_names.rds")
+saveRDS(names_list, file = "data/species_names/PL_species_names.rds")

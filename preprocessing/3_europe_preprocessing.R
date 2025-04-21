@@ -29,7 +29,7 @@ write_dataset(
   country_with_multimedia,
   path = file.path(paste0("data/europe.parquet")),
   format = "parquet",
-  partitioning = "scientificName",
+  partitioning = c("countryCode","scientificName"),
   max_partitions = 5000L,
   max_open_files = 2000L
 )

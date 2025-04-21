@@ -37,7 +37,7 @@ country_with_multimedia <- country_data %>%
 # Save the dataset to Parquet
 write_dataset(
   country_with_multimedia,
-  path = file.path(paste0("data/", country,".parquet")),
+  path = file.path(paste0("data/europe_data.parquet/", country,".parquet")),
   format = "parquet",
   partitioning = "scientificName",
   max_partitions = 5000L,

@@ -26,24 +26,6 @@ prepare_timeline_data <- function(data) {
     dplyr::arrange(year)
 }
 
-# plot_timeline <- function(plot_data) {
-#   plotly::plot_ly(
-#     plot_data,
-#     x = ~year,
-#     y = ~n,
-#     type = "scatter",
-#     mode = "lines+markers",
-#     marker = list(size = 8, color = "#1f77b4"),
-#     line = list(color = "#1f77b4", width = 2),
-#     hoverinfo = "text",
-#     text = ~paste0("Year: ", year, "<br>Observations: ", n)
-#   ) %>%
-#     plotly::layout(
-#       # title = "Observations per Year",
-#       xaxis = list(title = "Year"),
-#       yaxis = list(title = "Observations")
-#     )
-# }
 
 plot_timeline <- function(plot_data) {
   plotly::plot_ly(

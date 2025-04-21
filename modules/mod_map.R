@@ -19,12 +19,13 @@ mod_map_server <- function(id, filtered_data, selected_row) {
       
       leaflet(data) %>%
         addTiles() %>%
+        setView(lng = -3.7038, lat = 40.4168, zoom = 6) %>%  # Center on Madrid, Spain
         addCircleMarkers(
           lng = ~longitudeDecimal,
           lat = ~latitudeDecimal,
           radius = 5,
-          color = "#2c7fb8",
-          stroke = FALSE,
+          color = "#1f77b4",
+          stroke = TRUE,
           fillOpacity = 0.8,
           label = ~paste0(locality, " — ", eventDate),
           layerId = ~id
@@ -50,10 +51,10 @@ mod_map_server <- function(id, filtered_data, selected_row) {
       current_data <- filtered_data()$id
       if (identical(prev_filtered_data(), current_data) | is.null(prev_filtered_data())) {
         # Re-center the map and zoom in to the selected point
-        leafletProxy("map") %>%
-        setView(lng = row$longitudeDecimal, lat = row$latitudeDecimal, zoom = 10)
-        
         show_popup(row)
+        leafletProxy("map") %>%
+        setView(lng = row$longitudeDecimal, lat = row$latitudeDecimal, zoom = 14)
+        
       }
       # Update the previous filtered data
       prev_filtered_data(current_data)

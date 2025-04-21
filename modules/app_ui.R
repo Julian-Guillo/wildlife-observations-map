@@ -1,8 +1,19 @@
 app_ui <- function() {
   page_navbar(
-    title = "Species Observations",
+    title = "Wildlife Observations",
     fillable = TRUE,
     id = "view_mode",
+    
+    # Add a bslib theme
+    theme = bslib::bs_theme(
+      version = 5,
+      bootswatch = "flatly",
+      # primary = "#2C3E50",
+      # secondary = "#95a5a6",
+      # success = "#18BC9C",
+      # bg = "#F7F9FA",
+      # fg = "#1e2c2c"
+    ),
     
     tags$head(
       tags$link(rel = "stylesheet", type = "text/css", href = "main.css")

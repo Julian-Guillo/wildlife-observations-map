@@ -1,11 +1,10 @@
 mod_counter_ui <- function(id) {
   ns <- NS(id)
   value_box(
-    title = "Obs. last 20 years",
+    title = "Observations in the last 20 years",
     value = textOutput(ns("counter")),
     showcase = bsicons::bs_icon("camera"),
-    showcase_layout = "left center",
-    theme = "text-success"
+    showcase_layout = "left center"
   )
 }
 

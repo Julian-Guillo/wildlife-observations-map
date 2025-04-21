@@ -1,6 +1,9 @@
 .Rproj.user/
 .Rhistory
 
-# Ignore large data files
+# Ignore all data files
 data/*
-!data/poland_species_names.rds
+
+# And keep files inside species_names
+!data/species_names/
+!data/species_names/**

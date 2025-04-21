@@ -5,25 +5,38 @@ library(data.table)
 # Create partitioned parquet dataset by species---------------------------------
 # Set up a CSV reader with chunking
 # the raw data is not included in the repository, please make sure to download
-csv_reader <- open_dataset("data/occurence.csv", format = "csv")
+csv_reader <- open_dataset("data/raw/occurence.csv", format = "csv")
 
-start <- Sys.time()
-# Filter for Poland observations and write directly to parquet.
-## Select only the relevant columns
-poland_data <- csv_reader %>%
-  filter(countryCode == "PL") %>%
+# Convert to parquet for faster access
+csv_reader %>% 
   select(
     id,
+    occurrenceID,
     scientificName,
     vernacularName,
     longitudeDecimal,
     latitudeDecimal,
+    coordinateUncertaintyInMeters,
+    country,
+    countryCode,
+    stateProvince,
     locality,
     eventDate
-  )
+  ) %>%
+  write_dataset(
+    path = "data/occurrence.parquet",
+    format = "parquet",
+    max_partitions = 5000L,
+    max_open_files = 2000L
+    )
+
+start <- Sys.time()
+# Filter for Poland observations and write directly to parquet.
+## Select only the relevant columns
+poland_data <- open_dataset("data/occurrence.parquet") %>%
+  filter(countryCode == "PL")
 
 # Add multimedia data to the dataset
-
 # Read multimedia data 
 multimedia_raw <- as.data.table(
   open_dataset("data/multimedia.csv", format = "csv") %>%
@@ -45,7 +58,7 @@ poland_with_multimedia <- poland_data %>%
 # Save the dataset to Parquet
 write_dataset(
   poland_with_multimedia,
-  path = "data/poland_with_multimedia.parquet",
+  path = "data/PL.parquet",
   format = "parquet",
   partitioning = "scientificName",
   max_partitions = 5000L,
@@ -68,6 +81,10 @@ write_dataset(
 
 # Create vector with unique scientific names------------------------------------
 
+# Read the dataset
+poland_data <- open_dataset("data/PL.parquet") %>%
+  select(scientificName, vernacularName)
+
 # Get unique scientific names and their corresponding vernacular names
 scientific_and_vernacular_names <- poland_data %>%
   select(scientificName, vernacularName) %>%
@@ -89,4 +106,4 @@ names(names_list) <- ifelse(
 
 
 # Save to rds
-saveRDS(names_list, file = "data/poland_species_names.rds")
+saveRDS(names_list, file = "data/species_names/poland_species_names.rds")

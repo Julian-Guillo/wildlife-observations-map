@@ -16,7 +16,7 @@ app_ui <- function() {
       
       div(
         class = "m-3",
-        card(class = "mb-3 map", "testing"),
+        mod_map_ui("map"),
         layout_columns(
           col_widths = c(8, 4),
           mod_timeline_ui("timeline"),

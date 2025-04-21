@@ -40,7 +40,7 @@ COUNTRY_NAMES <- c(
 # Mock data for first run of the app
 MOCK_DATA <- data.frame(
   id = "SUPERCOOL_ID",
-  occurrenceID = "SUPERCOOL_ID",
+  occurrenceID = "https://www.linkedin.com/in/julian-guillo-vigo/",
   vernacularName = "Julian Guillo",
   longitudeDecimal = -0.4,
   latitudeDecimal = 39.3,

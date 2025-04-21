@@ -1,64 +1,115 @@
 # wildlife-observations-map
 
-
 This Shiny app was developed for the [Appsilon Technical Challenge](https://appsilon.com) and visualizes biodiversity observations from **Observation.org**.
 
-It features an interactive map, species search bar, and observation timeline, built with performance and scalability in mind.
+It features an interactive map, species search bar, observation timeline, and value boxes — built with performance, modularity, and scalability in mind.
 
+## 🐦 App Highlights
+
+- 🔍 **Search** by vernacular or scientific name.
+- 🗺️ **Interactive Leaflet map** of species observation, with clickable points. If photo avialable, it is shown in the popup
+- 📆 **Timeline** displaying observation dates.
+- 📊 **Value box** summarizing total observations.
+- 🧭 **Map interaction**: Selecting a row in the observation table highlights it on the map with a popup and zoom.
+- 📦 **Efficient data loading** using partitioned Parquet files.
+- 🧱 Built using **Shiny modules** for scalability and code organization.
+
+---
 
 ## 🔄 Data Preprocessing
 
-The original datasets (`occurrence.csv` ~20 GB and `multimedia.csv` ~1.5 GB) were too large to load into memory or deploy directly. To overcome this, I preprocessed the data using [`arrow`](https://arrow.apache.org/) and saved it in partitioned [Parquet](https://parquet.apache.org/) format for efficient querying and scalability.
+The original datasets (`occurrence.csv` ~20 GB and `multimedia.csv` ~1.5 GB) were too large to load into memory or deploy directly. To overcome this, the data was preprocessed using [`arrow`](https://arrow.apache.org/) and saved in partitioned [Parquet](https://parquet.apache.org/) format for efficient querying and scalability.
 
 ### Steps:
 
 1. **Filtering to Poland**
-   - Initially, only Polish observations were processed to test the app pipeline and reduce size.
-   - The dataset was filtered and converted to Parquet using the `arrow` R package.
-   - Files were **partitioned by species** (`species` column) to allow fast access to individual species without loading the full dataset.
+   - Initially filtered to only Polish observations to reduce size and simplify testing.
+   - Saved to disk in Parquet format partitioned by the `species` column.
 
 2. **Expanding to Europe**
-   - I then extended the preprocessing to include all European observations.
-   - However, due to ShinyApps.io's [100MB bundle limit](https://docs.posit.co/shinyapps.io/limits/), the full European dataset could not be included in the deployment.
+   - Preprocessing extended to include all European observations.
+   - Due to ShinyApps.io's 1GB bundle limit, full Europe-wide deployment was not possible.
 
 3. **Compromise: Selected European Countries**
-   - To stay within the size limits while demonstrating scalability, I included only a few representative countries (e.g., Poland, Germany, France, Netherlands).
-   - The code and file structure, however, are **designed to scale** easily:
-     - More countries can be added without changes to the app logic.
-     - Only the required partitions are loaded into memory at runtime.
-     - This ensures minimal resource usage and fast loading.
+   - Included some representative countries to demonstrate the app's functionality.
+   - Code supports more countries with no need to modify app logic.
 
 4. **Partitioning Strategy**
-   - Final Parquet files are **partitioned by species** (e.g., `species=Panthera_leo`) to allow precise and efficient data loading.
-   - This enables fast, on-demand reading of species data with minimal memory usage.
-
----
-
-## ⚙️ App Features
-
-- Map displaying observation points (Leaflet).
-- Timeline of observation events.
-- Dynamic species search bar (with `selectizeInput` and client-side filtering).
-- Optional country selector (visible only in "Per country" mode).
+   - Final Parquet files are **partitioned by species** (e.g., `species=Panthera_leo`) for fast, selective access.
+   - At runtime, only the necessary species data is loaded into memory.
 
 ---
 
 ## 🚀 Deployment
 
-Due to time limits, the deployment is done in **shinyapps.io**, so both the size of the dataset and the speed of the app are limited.
-- The current demo includes only a subset of European countries.
-- For full-scale deployment (e.g., Europe-wide or global), consider hosting on **Posit Connect** or **Shiny Server Pro**, or other custom options with **Shiny Proxy**.
+Deployment is on [**shinyapps.io**](https://www.shinyapps.io/) due to time constraints. Dataset and performance are limited accordingly.
+
+- Demo includes only a few European countries.
+- For full-scale deployment, consider:
+  - **Posit Connect**
+  - **Shiny Server Pro**
+  - **ShinyProxy** or a cloud-native solution with persistent storage.
 
 ---
 
 ## 📁 File Structure
 
-```
+I tried to keep the file structure clean and organized without overcomplicating it. Here's a brief overview:
+
+### Folders:
+- `R/` — Contains R scripts for app logic, modules, and helper functions.
+- `data/` — Preprocessed data files in Parquet format.
+- `modules/` — Contains Shiny modules like `mod_map`, `mod_timeline`, `mod_valuebox`, `mod_search`, `mod_table`, `app_ui`, `app_server`.
+- `preprocessing/` — Scripts for preprocessing the raw data into Parquet format.
+- `renv/` — Contains environment setup for the project using **`renv`**.
+- `www/` — Static files such as CSS, JS, and other utilities used in modules.
+
+### Files:
+- `global.R` — Global app setup, shared resources.
+- `app.R` — Main app file, includes UI and server logic.
+
+---
+
+## 🔄 Data Setup
+
+To run the app locally, you'll need the preprocessed dataset. You can download it from the following link:
+
+[Download the dataset](https://drive.google.com/file/d/1tiAuXvj_-b3kHcYxcCvtDVdeTgyE8dZ9/view?usp=drive_link)
+
+After downloading, place the dataset in the `data/` folder of the project directory, unzip it, and the app should work seamlessly.
+
+---
+
+## 🔧 Setting Up the Project
+
+This app uses **`renv`** to manage package dependencies and ensure consistent environments across different machines.
+
+### Steps to install and run:
+
+1. **Install R** — Ensure you have R installed. You can download it from [here](https://cran.r-project.org/).
+
+2. **Install Dependencies**:
+   - Clone this repository or download the app files.
+   - Open RStudio and navigate to the project folder.
+   - Run the following command to restore the required packages from the **`renv`** environment:
+     ```r
+     renv::restore()
+     ```
+   - This will install all necessary packages as per the `renv.lock` file.
+
+3. **Run the App**:
+   - After restoring the environment, you can run the app using:
+     ```r
+     shiny::runApp()
+     ```
+
+By using **`renv`**, the project is self-contained, and dependencies are managed in an isolated environment, ensuring that the app runs as expected regardless of your system's installed packages.
 
 ---
 
 ## 📌 Notes
 
-- The preprocessing is decoupled from the Shiny app logic and can be run independently to update or extend the dataset.
-- The use of Arrow + Parquet allows reading only the required subset of data into memory — crucial for handling large datasets in Shiny.
-
+- Data preprocessing is **fully decoupled** from the Shiny logic.
+- Uses **`arrow`** for fast, memory-efficient loading.
+- Designed to scale: Easily extend to more species or regions without major code changes.
+- Ideal for biodiversity exploration, citizen science platforms, or educational dashboards.

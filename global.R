@@ -18,10 +18,10 @@ source("modules/mod_search.R")
 source("modules/mod_table.R")
 source("modules/mod_timeline.R")
 
-
-source("R/utilsSearch.R")
-source("R/utilsServer.R")
-source("R/utilsTimeline.R")
+source("R/utils_map.R")
+source("R/utils_search.R")
+source("R/utils_server.R")
+source("R/utils_timeline.R")
 
 # Create a named vector for country codes
 COUNTRY_CODES <- c("AT", "BE", "CH", "CZ", "GR", "IT", "LU", "PL", "PT")

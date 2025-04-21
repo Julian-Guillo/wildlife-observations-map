@@ -20,7 +20,8 @@ mod_table_server <- function(id, filtered_data) {
       }
       
       datatable(
-        data,
+        data %>%
+          select(Locality = locality, Date = eventDate, Photo = Identifier),
         options = list(
           pageLength = 10,
           scrollY = "50vh",
@@ -34,5 +35,13 @@ mod_table_server <- function(id, filtered_data) {
         class = 'compact small'
       )
     })
+    
+    # Return the full row (reactively)
+    selected_row <- reactive({
+      req(input$data_table_rows_selected)
+      filtered_data()[input$data_table_rows_selected, ]
+    })
+    
+    return(selected_row)
   })
 }

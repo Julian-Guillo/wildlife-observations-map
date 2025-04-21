@@ -1,21 +1,25 @@
 # global.R
 library(arrow)
+library(bsicons)
 library(bslib)
 library(dplyr)
 library(DT)
 library(leaflet)
+library(lubridate)
 library(shiny)
 
 # Source all modules and functions
 source("modules/app_server.R")
 source("modules/app_ui.R")
-source("modules/mod_search.R")
+source("modules/mod_counter.R")
 source("modules/mod_map.R")
-source("modules/mod_timeline.R")
+source("modules/mod_search.R")
 source("modules/mod_table.R")
+source("modules/mod_timeline.R")
 
-source("R/utilsServer.R")
+
 source("R/utilsSearch.R")
+source("R/utilsServer.R")
 
 # Create a named vector for country codes
 COUNTRY_CODES <- c("AT", "BE", "CH", "CZ", "GR", "IT", "LU", "PL", "PT")

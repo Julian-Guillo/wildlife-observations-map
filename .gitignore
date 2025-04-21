@@ -13,3 +13,6 @@ data/*
 # And keep files inside species_names
 !data/species_names/
 !data/species_names/**
+
+# Ignore shinyapps.io related files
+rsconnect/

@@ -1,6 +1,12 @@
 .Rproj.user/
 .Rhistory
 
+# renv files to ignore
+renv/library/
+renv/staging/
+renv/cache/
+renv/python/
+
 # Ignore all data files
 data/*
 

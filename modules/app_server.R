@@ -1,6 +1,6 @@
 app_server <- function(input, output, session) {
   
-  filtered_data <- reactiveVal(mock_data)
+  filtered_data <- reactiveVal(MOCK_DATA)
   
   observe({
     req(search_vals$species() != "")

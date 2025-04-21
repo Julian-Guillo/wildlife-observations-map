@@ -1,15 +1,3 @@
-# Function to load Europe-wide data
-load_europe_data <- function(species) {
-  tryCatch({
-    dataset <- open_dataset("data/europe_data.parquet") %>% 
-      filter(scientificName == species) %>% 
-      collect()
-    dataset
-  }, error = function(e) {
-    data.frame(scientificName = character(0), stringsAsFactors = FALSE)
-  })
-}
-
 # Function to load country-specific data
 load_country_data <- function(country, species) {
   path <- file.path(paste0("data/europe_data.parquet/", country, ".parquet/scientificName=", URLencode(species)))
@@ -19,7 +7,41 @@ load_country_data <- function(country, species) {
     dataset$scientificName <- species
     dataset
   }, error = function(e) {
-    data.frame(scientificName = character(0), stringsAsFactors = FALSE)
+    EMPTY_DATA
+  })
+}
+
+# Function to load Europe-wide data
+load_europe_data <- function(species) {
+  
+  # Try to load data for each country and combine
+  tryCatch({
+    results <- lapply(COUNTRY_CODES, function(country_code) {
+      # Use the existing load_country_data function
+      data <- load_country_data(country_code, species)
+      
+      # Only return datasets that have rows (not empty)
+      if (nrow(data) > 0) {
+        return(data)
+      } else {
+        return(NULL)  # Skip empty datasets
+      }
+    })
+    
+    # Filter out NULL results (countries with no data)
+    valid_results <- results[!sapply(results, is.null)]
+    
+    if (length(valid_results) > 0) {
+      # Combine all data into a single dataframe
+      combined_data <- do.call(rbind, valid_results)
+      return(combined_data)
+    } else {
+      # Return empty dataframe if no data found
+      return(EMPTY_DATA)
+    }
+  }, error = function(e) {
+    # Return empty dataframe on any error
+    return(EMPTY_DATA)
   })
 }
 
@@ -27,7 +49,7 @@ load_country_data <- function(country, species) {
 update_data <- function(country, species, view_mode) {
   # Only proceed if species is provided
   if (species == "") {
-    return(data.frame(scientificName = character(0), stringsAsFactors = FALSE))
+    return(EMPTY_DATA)
   }
   
   # Choose the appropriate data loading function based on view mode

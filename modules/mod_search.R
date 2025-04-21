@@ -9,7 +9,7 @@ mod_search_ui <- function(id) {
         selectInput(
           inputId = ns("country"),
           label = "Country",
-          choices = country_names,
+          choices = COUNTRY_NAMES,
           selected = "PL"
         )
       ),

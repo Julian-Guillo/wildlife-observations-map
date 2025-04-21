@@ -18,8 +18,8 @@ source("R/utilsServer.R")
 source("R/utilsSearch.R")
 
 # Create a named vector for country codes
-country_codes <- c("AT", "BE", "CH", "CZ", "GR", "IT", "LU", "PL", "PT")
-country_names <- c(
+COUNTRY_CODES <- c("AT", "BE", "CH", "CZ", "GR", "IT", "LU", "PL", "PT")
+COUNTRY_NAMES <- c(
   "Austria" = "AT", 
   "Belgium" = "BE", 
   "Switzerland" = "CH", 
@@ -32,7 +32,7 @@ country_names <- c(
 )
 
 # Mock data for first run of the app
-mock_data <- data.frame(
+MOCK_DATA <- data.frame(
   scientificName = "R Shiny Developer",
   vernacularName = "Julián",
   longitudeDecimal = -0.4,
@@ -41,5 +41,20 @@ mock_data <- data.frame(
   countryCode = "ES",
   eventDate = as.Date("2025-04-21"),
   Identifier = "R Shiny Developer",
+  stringsAsFactors = FALSE
+)
+
+# Empty dataframe to load when error or no data
+EMPTY_DATA <- data.frame(
+  id = character(0),
+  occurrenceID = character(0),
+  vernacularName = character(0),
+  longitudeDecimal = numeric(0),
+  latitudeDecimal = numeric(0),
+  locality = character(0),
+  countryCode = character(0),
+  eventDate = as.Date(character(0)),
+  Identifier = character(0),
+  scientificName = character(0),
   stringsAsFactors = FALSE
 )

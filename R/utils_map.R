@@ -21,8 +21,8 @@ show_popup <- function(row) {
     )
   }
   
-  leafletProxy("map") |>
-    clearPopups() |>
+  leafletProxy("map") %>%
+    clearPopups() %>%
     addPopups(
       lng = row$longitudeDecimal,
       lat = row$latitudeDecimal,

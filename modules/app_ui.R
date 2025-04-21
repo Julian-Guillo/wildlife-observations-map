@@ -8,8 +8,8 @@ app_ui <- function() {
       tags$link(rel = "stylesheet", type = "text/css", href = "main.css")
     ),
     
-    nav_panel("Per country"),
-    nav_panel("Europe"),
+    nav_panel(title = "Per country", class = "custom-nav-panel"),
+    nav_panel(title = "Europe", class = "custom-nav-panel"),
     
     layout_columns(
       col_widths = c(7, 5),

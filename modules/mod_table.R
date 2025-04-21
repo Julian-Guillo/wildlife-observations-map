@@ -1,6 +1,9 @@
 mod_table_ui <- function(id) {
   ns <- NS(id)
+  div(
+  tags$label("Select any observation"),
   DTOutput(ns("data_table"))
+  )
 }
 
 mod_table_server <- function(id, filtered_data) {
@@ -15,7 +18,7 @@ mod_table_server <- function(id, filtered_data) {
           data.frame(Message = "No observations found for this species in the selected country."),
           options = list(dom = 't'),
           rownames = FALSE,
-          class = 'compact small'
+          class = 'compact small table-bordered table-striped'
         ))
       }
       
@@ -32,7 +35,7 @@ mod_table_server <- function(id, filtered_data) {
         ),
         selection = list(mode = "single", target = "row"),
         rownames = FALSE,
-        class = 'compact small'
+        class = 'compact small table-bordered table-striped'
       )
     })
     

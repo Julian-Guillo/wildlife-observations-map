@@ -34,14 +34,10 @@ mod_search_ui <- function(id) {
 }
 
 mod_search_server <- function(id) {
-  moduleServer(id, function(input, output, session) {
+  moduleServer(id, function(input, output, session, view_mode) {
     
     species_list <- reactive({
-      country <- input$country
-      tryCatch({
-        readRDS(paste0("data/species_names/", country, "_species_names.rds"))
-      }, error = function(e) {
-        c("No species available for this country" = "")
+      get_species_list(view_mode, input$country)
       })
     })
     

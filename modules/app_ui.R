@@ -17,7 +17,8 @@ app_ui <- function() {
       div(
         class = "m-3",
         card(class = "mb-3 map", "testing"),
-        card(class = "timeline", style = "min-height: 20vh;", "This is a small card, e.g., for summary or status.")
+        card(class = "timeline", style = "min-height: 20vh;", 
+             "This is a small card, e.g., for summary or status.")
       ),
       
       div(

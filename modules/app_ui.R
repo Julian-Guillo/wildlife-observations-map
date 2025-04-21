@@ -19,8 +19,7 @@ app_ui <- function() {
         card(class = "mb-3 map", "testing"),
         layout_columns(
           col_widths = c(8, 4),
-          card(class = "timeline", style = "min-height: 20vh;", 
-               "This is a small card, e.g., for summary or status."),
+          mod_timeline_ui("timeline"),
           mod_counter_ui("counter")
       )),
       

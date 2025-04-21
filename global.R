@@ -6,6 +6,7 @@ library(dplyr)
 library(DT)
 library(leaflet)
 library(lubridate)
+library(plotly)
 library(shiny)
 
 # Source all modules and functions
@@ -20,6 +21,7 @@ source("modules/mod_timeline.R")
 
 source("R/utilsSearch.R")
 source("R/utilsServer.R")
+source("R/utilsTimeline.R")
 
 # Create a named vector for country codes
 COUNTRY_CODES <- c("AT", "BE", "CH", "CZ", "GR", "IT", "LU", "PL", "PT")
@@ -37,14 +39,16 @@ COUNTRY_NAMES <- c(
 
 # Mock data for first run of the app
 MOCK_DATA <- data.frame(
-  scientificName = "R Shiny Developer",
-  vernacularName = "Julián",
+  id = "SUPERCOOL_ID",
+  occurrenceID = "SUPERCOOL_ID",
+  vernacularName = "Julian Guillo",
   longitudeDecimal = -0.4,
   latitudeDecimal = 39.3,
-  locality = "Albal, Valencia, Spain",
+  locality = "Spain - Albal, Valencia",
   countryCode = "ES",
   eventDate = as.Date("2025-04-21"),
-  Identifier = "R Shiny Developer",
+  Identifier = "static/julian_photo.jpg",
+  scientificName = "R Shiny Developer",
   stringsAsFactors = FALSE
 )
 

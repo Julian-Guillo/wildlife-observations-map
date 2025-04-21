@@ -9,5 +9,6 @@ app_server <- function(input, output, session) {
   
   search_vals <- mod_search_server("search", input$view_mode)
   mod_table_server("table", filtered_data)
+  mod_timeline_server("timeline", filtered_data)
   mod_counter_server("counter", filtered_data)
 }

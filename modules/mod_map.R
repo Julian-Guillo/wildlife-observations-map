@@ -6,7 +6,7 @@ mod_map_ui <- function(id) {
        )
 }
 
-mod_map_server <- function(id, filtered_data) {
+mod_map_server <- function(id, filtered_data, selected_row) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
@@ -28,42 +28,19 @@ mod_map_server <- function(id, filtered_data) {
         )
     })
     
+    # Trigger popup on point click
     observeEvent(input$map_marker_click, {
       click <- input$map_marker_click
       data <- filtered_data()
-      req(nrow(data) > 0)
-      
-      clicked_row <- data[data$id == click$id, ]
-      req(nrow(clicked_row) == 1)
-      
-      # Popup content
-      locality <- clicked_row$locality
-      date <- clicked_row$eventDate
-      occurrence_link <- clicked_row$occurrenceID
-      identifier <- clicked_row$Identifier
-      
-      has_photo <- !is.na(identifier) && identifier != ""
-      
-      popup_content <- paste0(
-        "<b>Locality:</b> ", locality, "<br/>",
-        "<b>Date:</b> ", date, "<br/>",
-        "<b><a href='", occurrence_link, "' target='_blank'>More info</a><br/></b> "
-      )
-      
-      if (has_photo) {
-        popup_content <- paste0(
-          popup_content,
-          "<img src='", identifier, "' width='200' style='margin-top:5px;'/>"
-        )
-      }
-      
-      leafletProxy("map") |>
-        addPopups(
-          lng = click$lng,
-          lat = click$lat,
-          popup = popup_content,
-          layerId = "selected_popup"
-        )
+      row <- data[data$id == click$id, ]
+      show_popup(row)
+    })
+    
+    # Trigger popup when selected_row changes
+    observeEvent(selected_row(), {
+      row <- selected_row()
+      req(!is.null(row), nrow(row) == 1)
+      show_popup(row)
     })
   })
 }

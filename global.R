@@ -47,7 +47,7 @@ MOCK_DATA <- data.frame(
   locality = "Spain - Albal, Valencia",
   countryCode = "ES",
   eventDate = as.Date("2025-04-21"),
-  Identifier = "static/julian_photo.jpg",
+  Identifier = "static/julian_photo",
   scientificName = "R Shiny Developer",
   stringsAsFactors = FALSE
 )

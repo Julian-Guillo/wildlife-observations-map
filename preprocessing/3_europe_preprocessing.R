@@ -38,3 +38,31 @@ write_dataset(
 # to select less countries. It shouldn't be hard to use all the dataset with 
 # enough storage, as the dataset is partitioned by species and the loading time 
 # is very fast when using a partitioned dataset.
+
+
+# Read the dataset
+europe_data <- open_dataset("data/europe_data.parquet") %>%
+  select(scientificName, vernacularName)
+
+# Get unique scientific names and their corresponding vernacular names
+scientific_and_vernacular_names <- europe_data %>%
+  select(scientificName, vernacularName) %>%
+  distinct() %>%
+  arrange(scientificName) %>%
+  collect()
+
+# Create a list of names for the species
+vernacular_names <- scientific_and_vernacular_names$vernacularName
+scientific_names <- scientific_and_vernacular_names$scientificName
+names_list <- scientific_names
+names(names_list) <- ifelse(
+  is.na(vernacular_names) | vernacular_names == "",
+  # If vernacular name is missing, just use scientific name
+  scientific_names,
+  # Otherwise show "vernacular (scientific)"
+  paste0(vernacular_names, " (", scientific_names, ")")  
+)
+
+
+# Save to rds
+saveRDS(names_list, file = "data/species_names/Europe_species_names.rds")

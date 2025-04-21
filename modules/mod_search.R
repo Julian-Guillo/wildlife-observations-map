@@ -33,13 +33,12 @@ mod_search_ui <- function(id) {
   )
 }
 
-mod_search_server <- function(id) {
-  moduleServer(id, function(input, output, session, view_mode) {
+mod_search_server <- function(id, view_mode) {
+  moduleServer(id, function(input, output, session) {
     
     species_list <- reactive({
       get_species_list(view_mode, input$country)
       })
-    })
     
     observeEvent(species_list(), {
       selected_species <- input$species

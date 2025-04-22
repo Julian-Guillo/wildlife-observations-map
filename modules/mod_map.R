@@ -78,6 +78,7 @@ mod_map_server <- function(id, filtered_data, selected_row) {
       row <- selected_row()
       req(!is.null(row),
           nrow(row) == 1,
+          !is.na(row$longitudeDecimal),
           filtered_data())
       
       current_data <- filtered_data()$id

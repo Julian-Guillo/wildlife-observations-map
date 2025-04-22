@@ -26,26 +26,42 @@ mod_map_server <- function(id, filtered_data, selected_row) {
     })
     
     output$map <- renderLeaflet({
-      data <- filtered_data()
-      req(nrow(data) > 0)
-      
-      leaflet(data) %>%
+      leaflet() %>%
         addTiles() %>%
-        setView(
-          lng = mean(data$longitudeDecimal, na.rm = TRUE),
-          lat = mean(data$latitudeDecimal, na.rm = TRUE),
-          zoom = 5
-        ) %>%
-        addCircleMarkers(
-          lng = ~longitudeDecimal,
-          lat = ~latitudeDecimal,
-          radius = 5,
-          color = "#1f77b4",
-          stroke = TRUE,
-          fillOpacity = 0.8,
-          label = ~paste0(locality, " — ", eventDate),
-          layerId = ~id
-        )
+        setView(lng = 15, lat = 54, zoom = 4)
+    })
+    
+    observe({
+      data <- filtered_data()
+      proxy <- leafletProxy("map")
+      
+      # Clear existing markers
+      proxy %>%
+        clearMarkers() %>% 
+        clearPopups()
+      
+      if (!is.null(data) && nrow(data) > 0) {
+        proxy %>%
+          addCircleMarkers(
+            data = data,
+            lng = ~longitudeDecimal,
+            lat = ~latitudeDecimal,
+            radius = 5,
+            color = "#1f77b4",
+            stroke = TRUE,
+            fillOpacity = 0.8,
+            label = ~paste0(locality, " — ", eventDate),
+            layerId = ~id
+          ) %>%
+          setView(
+            lng = mean(data$longitudeDecimal, na.rm = TRUE),
+            lat = mean(data$latitudeDecimal, na.rm = TRUE),
+            zoom = 5
+          )
+      } else {
+        proxy %>%
+          setView(lng = 15, lat = 54, zoom = 4)
+      }
     })
     
     # Trigger popup on point click

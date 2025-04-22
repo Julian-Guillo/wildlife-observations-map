@@ -1,19 +1,19 @@
 # wildlife-observations-map
 
-This Shiny app was developed for the [Appsilon Technical Challenge](https://appsilon.com) and visualizes biodiversity observations from **Observation.org**.
+This Shiny app was developed for the [Appsilon Technical Challenge](https://appsilon.com) and visualizes biodiversity observations from [Observation.org](https://observation.org).
 
 It features an interactive map, species search bar, observation timeline, and value boxes — built with performance, modularity, and scalability in mind.
 
-See sample deployment[here](https://julianguillo.shinyapps.io/biodiversity_dashboard/).
+See app [here](https://julianguillo.shinyapps.io/biodiversity_dashboard/).
 
 
 ## 🐦 App Highlights
 
 - 🔍 **Search** by vernacular or scientific name.
-- 🗺️ **Interactive Leaflet map** of species observation, with clickable points. If photo avialable, it is shown in the popup
+- 🗺️ **Interactive Leaflet map** of species observation, with clickable points. If photo avialable, it is shown in the popup. Efficient usage of leafletProxy to update the map without re-rendering.
 - 📆 **Timeline** displaying observation dates.
 - 📊 **Value box** summarizing total observations.
-- 🧭 **Map interaction**: Selecting a row in the observation table highlights it on the map with a popup and zoom.
+- 🧭 **Data table with map interaction**: Selecting a row in the observation table highlights it on the map with a popup and zoom.
 - 📦 **Efficient data loading** using partitioned Parquet files.
 - 🧱 Built using **Shiny modules** for scalability and code organization.
 
@@ -124,5 +124,7 @@ By using **`renv`**, the project is self-contained, and dependencies are managed
 
 ## 🛠️ Future Improvements
 - **Add tests/ folder**: Implement unit tests for critical functions and modules to ensure reliability and maintainability.
-- Add unit tests with testthat.
-- Add end-to-end tests with shinytest.
+  - Add unit tests with testthat.
+  - Add end-to-end tests with shinytest.
+- Deploy app with **larger dataset**. Need to consider hosting options like Posit Connect or ShinyProxy.
+- Add **more custom CSS** styles for a more polished look. Using basic prebuilt bs theme at the moment.

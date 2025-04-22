@@ -18,7 +18,7 @@ mod_search_ui <- function(id) {
         inputId = ns("species"), 
         label = "Species",
         multiple = FALSE,
-        choices = c("Search Bar" = ""),  # Initial empty choices
+        choices = c("." = ""),  # Initial empty choices
         options = list(
           create = FALSE,
           placeholder = "Write species name here...",
@@ -49,7 +49,7 @@ mod_search_server <- function(id, view_mode) {
       updateSelectizeInput(
         session = session,
         inputId = "species",
-        choices = c("Search Bar" = "", updated_species_list),
+        choices = c("." = "", updated_species_list),
         server = TRUE,
         selected = selected_choice
       )

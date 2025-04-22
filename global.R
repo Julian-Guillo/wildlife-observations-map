@@ -24,12 +24,17 @@ source("R/utils_server.R")
 source("R/utils_timeline.R")
 
 # Create a named vector for country codes
-COUNTRY_CODES <- c("BE", "CZ", "LU", "PL")
+COUNTRY_CODES <- c("AT", "BE", "CH", "CZ", "GR", "IT", "LU", "PL", "PT")
 COUNTRY_NAMES <- c(
+  "Austria" = "AT", 
   "Belgium" = "BE", 
-  "Czech Republic" = "CZ",
+  "Switzerland" = "CH", 
+  "Czech Republic" = "CZ", 
+  "Greece" = "GR", 
+  "Italy" = "IT", 
   "Luxembourg" = "LU", 
-  "Poland" = "PL"
+  "Poland" = "PL", 
+  "Portugal" = "PT"
 )
 
 # Mock data for first run of the app

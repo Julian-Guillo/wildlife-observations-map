@@ -4,6 +4,9 @@ This Shiny app was developed for the [Appsilon Technical Challenge](https://apps
 
 It features an interactive map, species search bar, observation timeline, and value boxes — built with performance, modularity, and scalability in mind.
 
+See sample deployment[here](https://julianguillo.shinyapps.io/biodiversity_dashboard/).
+
+
 ## 🐦 App Highlights
 
 - 🔍 **Search** by vernacular or scientific name.
@@ -13,6 +16,9 @@ It features an interactive map, species search bar, observation timeline, and va
 - 🧭 **Map interaction**: Selecting a row in the observation table highlights it on the map with a popup and zoom.
 - 📦 **Efficient data loading** using partitioned Parquet files.
 - 🧱 Built using **Shiny modules** for scalability and code organization.
+
+
+**Psst!** Small **surprise** on first app load. Click on the table or the map point to see this weird "species"!
 
 ---
 
@@ -24,25 +30,25 @@ The original datasets (`occurrence.csv` ~20 GB and `multimedia.csv` ~1.5 GB) wer
 
 1. **Filtering to Poland**
    - Initially filtered to only Polish observations to reduce size and simplify testing.
-   - Saved to disk in Parquet format partitioned by the `species` column.
+   - Saved to disk in Parquet format partitioned by the `scientificName` column.
 
 2. **Expanding to Europe**
    - Preprocessing extended to include all European observations.
-   - Due to ShinyApps.io's 1GB bundle limit, full Europe-wide deployment was not possible.
+   - Due to ShinyApps.io's 1GB bundle and 10K file limit (dataset partitioned by species to allow much faster loads), full Europe-wide deployment was not possible.
 
 3. **Compromise: Selected European Countries**
    - Included some representative countries to demonstrate the app's functionality.
    - Code supports more countries with no need to modify app logic.
 
 4. **Partitioning Strategy**
-   - Final Parquet files are **partitioned by species** (e.g., `species=Panthera_leo`) for fast, selective access.
+   - Final Parquet files are **partitioned by species** (e.g., `scientificName=Panthera_leo`) for fast, selective access.
    - At runtime, only the necessary species data is loaded into memory.
 
 ---
 
 ## 🚀 Deployment
 
-Deployment is on [**shinyapps.io**](https://www.shinyapps.io/) due to time constraints. Dataset and performance are limited accordingly.
+Deployment is on [**shinyapps.io**](https://julianguillo.shinyapps.io/biodiversity_dashboard/) due to time constraints. Dataset and performance are limited accordingly. App should nevertheless work smoothly with the smaller dataset provided there.
 
 - Demo includes only a few European countries.
 - For full-scale deployment, consider:
@@ -113,3 +119,10 @@ By using **`renv`**, the project is self-contained, and dependencies are managed
 - Uses **`arrow`** for fast, memory-efficient loading.
 - Designed to scale: Easily extend to more species or regions without major code changes.
 - Ideal for biodiversity exploration, citizen science platforms, or educational dashboards.
+
+---
+
+## 🛠️ Future Improvements
+- **Add tests/ folder**: Implement unit tests for critical functions and modules to ensure reliability and maintainability.
+- Add unit tests with testthat.
+- Add end-to-end tests with shinytest.

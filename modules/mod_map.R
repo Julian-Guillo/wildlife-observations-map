@@ -27,7 +27,15 @@ mod_map_server <- function(id, filtered_data, selected_row) {
     
     output$map <- renderLeaflet({
       data <- filtered_data()
-      req(nrow(data) > 0)
+      
+      req(data)
+      if (nrow(data) == 0) {
+        return(
+          leaflet() %>% 
+            addTiles() %>%
+            setView(lng = 15, lat = 54, zoom = 4)
+        )
+      }
       
       leaflet(data) %>%
         addTiles() %>%

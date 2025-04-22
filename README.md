@@ -63,16 +63,16 @@ Deployment is on [**shinyapps.io**](https://julianguillo.shinyapps.io/biodiversi
 I tried to keep the file structure clean and organized without overcomplicating it. Here's a brief overview:
 
 ### Folders:
-- `R/` — Contains R scripts for app logic, modules, and helper functions.
+- `R/` — Contains R scripts for helper functions.
 - `data/` — Preprocessed data files in Parquet format.
 - `modules/` — Contains Shiny modules like `mod_map`, `mod_timeline`, `mod_valuebox`, `mod_search`, `mod_table`, `app_ui`, `app_server`.
 - `preprocessing/` — Scripts for preprocessing the raw data into Parquet format.
 - `renv/` — Contains environment setup for the project using **`renv`**.
-- `www/` — Static files such as CSS, JS, and other utilities used in modules.
+- `www/` — Static files like CSS, JS, and images.
 
 ### Files:
 - `global.R` — Global app setup, shared resources.
-- `app.R` — Main app file, includes UI and server logic.
+- `app.R` — Main app file, loads dependencies and calls UI and server logic.
 
 ---
 
@@ -126,5 +126,5 @@ By using **`renv`**, the project is self-contained, and dependencies are managed
 - **Add tests/ folder**: Implement unit tests for critical functions and modules to ensure reliability and maintainability.
   - Add unit tests with testthat.
   - Add end-to-end tests with shinytest.
-- Deploy app with **larger dataset**. Need to consider hosting options like Posit Connect or ShinyProxy.
+- Deploy app with **larger dataset**. Need to consider hosting options like Posit Connect or ShinyProxy. Easily extendable to more countries without major code changes.
 - Add **more custom CSS** styles for a more polished look. Using basic prebuilt bs theme at the moment.

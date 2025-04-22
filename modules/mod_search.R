@@ -37,7 +37,8 @@ mod_search_server <- function(id, view_mode) {
   moduleServer(id, function(input, output, session) {
     
     species_list <- reactive({
-      get_species_list(view_mode, input$country)
+      print("species list updated")
+      get_species_list(view_mode(), input$country)
       })
     
     observeEvent(species_list(), {

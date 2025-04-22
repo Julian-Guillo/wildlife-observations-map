@@ -61,3 +61,12 @@ saveRDS(names_list, file = paste0("data/species_names/", country, "_species_name
 end <- Sys.time()
 print(paste("Time taken to process", country, "data:", end - start))
 }
+
+
+# Additional: save species of all countries to a single file--------------------
+species_names_files <- list.files("data/species_names", pattern = "*.rds", full.names = TRUE)
+species_names_list <- lapply(species_names_files, readRDS)
+# get a vector with all the names
+species_names_vector <- unlist(species_names_list)
+# remove duplicates, maintain a named vector
+species_names_vector <- species_names_vector[!duplicated(species_names_vector)]

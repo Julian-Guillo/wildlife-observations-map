@@ -126,5 +126,9 @@ By using **`renv`**, the project is self-contained, and dependencies are managed
 - **Add tests/ folder**: Implement unit tests for critical functions and modules to ensure reliability and maintainability.
   - Add unit tests with testthat.
   - Add end-to-end tests with shinytest2.
-- Deploy app with **larger dataset**. Need to consider hosting options like Posit Connect or ShinyProxy. Easily extendable to more countries without major code changes.
+  - Create CD/CI pipeline to run test before pushing new changes.
+- Deploy app with **larger dataset**.
+   - Need to consider hosting options like Posit Connect or ShinyProxy. Easily extendable to more countries without major code changes.
+   - If number of species starts getting too high, better to do nested partitions, by higherClassification or family for example, and then by species.
 - Add **more custom CSS** styles for a more polished look. Using basic prebuilt bs theme at the moment.
+

@@ -4,7 +4,9 @@ mod_counter_ui <- function(id) {
     title = "Observations in the last 20 years",
     value = textOutput(ns("counter")),
     showcase = bsicons::bs_icon("camera"),
-    showcase_layout = "left center"
+    showcase_layout = "left center",
+    theme = "text-primary"
+    
   )
 }
 

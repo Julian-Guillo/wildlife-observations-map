@@ -2,7 +2,11 @@
 mod_map_ui <- function(id) {
   ns <- NS(id)
   card(class = "mb-3 map",
-       leafletOutput(ns("map"))
+       card_header(textOutput(ns("map_card_header"))),
+       card_body(
+         class = "p-0",
+         leafletOutput(ns("map")))
+         
        )
 }
 
@@ -12,6 +16,14 @@ mod_map_server <- function(id, filtered_data, selected_row) {
     
     # Store the previous filtered data to check for changes
     prev_filtered_data <- reactiveVal(NULL)
+    
+    # Dynamic card header using renderText
+    output$map_card_header <- renderText({
+      selected_species <- filtered_data()$scientificName[1]
+      req(selected_species)  # Ensure that a species is selected
+      
+      paste("Map of Observations for", selected_species)
+    })
     
     output$map <- renderLeaflet({
       data <- filtered_data()

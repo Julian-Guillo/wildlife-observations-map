@@ -1,6 +1,8 @@
 mod_timeline_ui <- function(id) {
   ns <- NS(id)
-  card(class = "timeline", style = "min-height: 20vh;",
+  card(class = "timeline", 
+       style = "min-height: 20vh;",
+       card_header("Evolution of observations over the last 20 years"),
        plotly::plotlyOutput(ns("timeline_plot"), height = "20vh"))
 }
 

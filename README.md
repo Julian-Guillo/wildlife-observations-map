@@ -34,7 +34,7 @@ The original datasets (`occurrence.csv` ~20 GB and `multimedia.csv` ~1.5 GB) wer
 
 2. **Expanding to Europe**
    - Preprocessing extended to include all European observations.
-   - Due to ShinyApps.io's 1GB bundle limit, full Europe-wide deployment was not possible.
+   - Due to ShinyApps.io's 1GB bundle and 10K file limit (dataset partitioned by species to allow much faster loads), full Europe-wide deployment was not possible.
 
 3. **Compromise: Selected European Countries**
    - Included some representative countries to demonstrate the app's functionality.

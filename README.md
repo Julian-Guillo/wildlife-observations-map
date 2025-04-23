@@ -11,7 +11,7 @@ See app [here](https://julianguillo.shinyapps.io/biodiversity_dashboard/).
 
 - 🔍 **Search** by vernacular or scientific name.
 - 🗺️ **Interactive Leaflet map** of species observation, with clickable points. If photo avialable, it is shown in the popup. Efficient usage of leafletProxy to update the map without re-rendering.
-- 📆 **Timeline** displaying observation dates.
+- 📆 **Timeline** displaying observations over the last 20 years.
 - 📊 **Value box** summarizing total observations.
 - 🧭 **Data table with map interaction**: Selecting a row in the observation table highlights it on the map with a popup and zoom.
 - 📦 **Efficient data loading** using partitioned Parquet files.
@@ -21,15 +21,34 @@ See app [here](https://julianguillo.shinyapps.io/biodiversity_dashboard/).
 **Psst!** Small **surprise** on first app load. Click on the table or the map point to see this weird "species"!
 
 ---
+## 🧬 Dataset
+
+The app uses two large datasets from [Observation.org](https://observation.org):
+
+1. **Occurrence Data** (`occurrence.csv`)
+   - ~40 million rows, 12 columns.
+   - Contains details of each biodiversity observation, including:
+     - Unique ID and observation link
+     - Scientific and vernacular names
+     - Geographic coordinates and uncertainty
+     - Country, region, and locality
+     - Observation date
+
+2. **Multimedia Data** (`multimedia.csv`)
+   - ~5 million rows, 9 columns.
+   - Maps observation IDs to photo URLs (if available), author of the observation, license and other multimedia information.
+
+---
 
 ## 🔄 Data Preprocessing
 
-The original datasets (`occurrence.csv` ~20 GB and `multimedia.csv` ~1.5 GB) were too large to load into memory or deploy directly. To overcome this, the data was preprocessed using [`arrow`](https://arrow.apache.org/) and saved in partitioned [Parquet](https://parquet.apache.org/) format for efficient querying and scalability.
+The original [datasets](https://drive.google.com/file/d/1l1ymMg-K_xLriFv1b8MgddH851d6n2sU/view) (`occurrence.csv` ~20 GB and `multimedia.csv` ~1.5 GB) were too large to load into memory or deploy directly. To overcome this, the data was preprocessed using [`arrow`](https://arrow.apache.org/) and saved in partitioned [Parquet](https://parquet.apache.org/) format for efficient querying and scalability.
 
 ### Steps:
 
 1. **Filtering to Poland**
    - Initially filtered to only Polish observations to reduce size and simplify testing.
+   - Selected relevant columns from both original raw datasets and joined by id.
    - Saved to disk in Parquet format partitioned by the `scientificName` column.
 
 2. **Expanding to Europe**
@@ -131,4 +150,5 @@ By using **`renv`**, the project is self-contained, and dependencies are managed
    - Need to consider hosting options like Posit Connect or ShinyProxy. Easily extendable to more countries without major code changes.
    - If number of species starts getting too high, better to do nested partitions, by higherClassification or family for example, and then by species.
 - Add **more custom CSS** styles for a more polished look. Using basic prebuilt bs theme at the moment.
+- Add box with **more information** about the selected species, like family, higher classification and first observation.
 

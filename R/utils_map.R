@@ -4,8 +4,7 @@ show_popup <- function(row) {
   locality <- row$locality
   date <- row$eventDate
   occurrence_link <- row$occurrenceID
-  identifier <- row$Identifier
-  
+  identifier <- sub(pattern = "photos/", replacement = "media/photo/", x = row$Identifier)
   has_photo <- !is.na(identifier) && identifier != ""
   
   popup_content <- paste0(
@@ -16,7 +15,7 @@ show_popup <- function(row) {
   
   if (has_photo) {
     popup_content <- paste0(
-      "<img src='", gsub("/$", ".jpg", identifier), ".jpg' width='200' style='margin-bottom:5px;'/><br/>",
+      "<img src='", gsub("/$", ".jpg", identifier), "' width='200' style='margin-bottom:5px;'/><br/>",
       popup_content
     )
   }

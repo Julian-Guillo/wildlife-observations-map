@@ -17,7 +17,6 @@ source("modules/mod_map.R")
 source("modules/mod_search.R")
 source("modules/mod_table.R")
 source("modules/mod_timeline.R")
-source("modules/mod_buttons.R")
 
 source("R/utils_map.R")
 source("R/utils_search.R")
